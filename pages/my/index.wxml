@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="avatar flex">
+    <image src="{{userInfo.avatarUrl}}">
+    </image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="cells">
+    <block wx:for="{{items}}" wx:key="{{item}}">
+      <view class="cell">
+        <view class="cell-bd">
+          <text class="desc">{{item.desc}}</text>
+        </view>
+        <view class="cell-ft"></view>
+      </view>
+    </block>
+  </view>
+</view>

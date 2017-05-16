@@ -1,0 +1,15 @@
+<view class="container">
+  <text class="warn">为了确保服务质量，请先验证你的手机</text>
+  <form action="" class="oform" bindsubmit="formSubmit">
+    <view class="inputbox flex">
+      <input maxlength="11" type="number" name="phone" class="primary" placeholder="请输入你的手机号"/>
+      <button hover-class="send">发送验证码</button>
+    </view>
+    <view class="inputbox flex">
+      <input  type="number" name="yzm" class="primary" placeholder="验证码"/>
+      <text class="info">没有收到?</text>
+    </view>
+    <button class="login" form-type="submit">立即登录</button>
+  </form>
+</view>
+

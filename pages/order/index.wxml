@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="wrap" style="display:{{display1}};">
+    <view class="header">
+      <text class="kind">{{serverkind}}</text>
+      <text class="state">已支付</text>
+    </view>
+    <view class="info">
+      <text class="label">服务地址:</text>
+       <text class="content">{{serveraddr}}</text>
+    </view>
+    <view class="info">
+      <text class="label">服务时间:</text>
+       <text class="content">{{date}} {{time}}上门</text>
+    </view>
+    <view class="info">
+      <text class="label">服务明细:</text>
+       <text class="content">玻璃面积{{area}}平米,{{sum}}元</text>
+    </view>
+  </view>
+  <view class="start" style="display:{{display2}}">
+    <text class="warn">你的订单空空如也~~~</text>
+  </view>
+</view>

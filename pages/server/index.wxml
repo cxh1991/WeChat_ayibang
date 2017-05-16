@@ -1,0 +1,20 @@
+<view class="containerbox">
+  <view class="wrap">
+    <view class="title">{{name.title0}}</view>
+    <block class="list" wx:for="{{list0}}" wx:key="item" >
+    <view class="item" data-text="{{item.name}}" bindtap="order">
+      <image src="{{item.image}}" data-text="{{item.name}}"></image>
+      <text class="desc" data-text="{{item.name}}">{{item.name}}</text>
+    </view>
+    </block>
+  </view>
+  <view class="wrap">
+    <view class="title">{{name.title1}}</view>
+    <block wx:for="{{list1}}" wx:key="item">
+    <view class="item" data-text="{{item.name}}" bindtap="order">
+      <image src="{{item.image}}" data-text="{{item.name}}"></image>
+      <text class="desc" data-text="{{item.name}}">{{item.name}}</text>
+    </view>
+    </block>
+  </view>
+</view>

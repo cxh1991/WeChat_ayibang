@@ -1,0 +1,31 @@
+<view class="container">
+ <view class="wrap">
+  <view class="currentCity flex">
+    <text class="now">{{now}}</text>
+    <view class="border">
+      <text class="current" data-text="{{city}}" bindtap="bindViewTap">{{city}}</text>
+    </view>
+  </view>
+  <view class="hotcity flex">
+    <text class="hot">{{hot}}</text>
+    <view class="page">
+    <block  wx:for="{{hotcitys}}" wx:key="{{item}}">
+      <view class="border " >
+        <text class="current" data-text="{{item.name}}"bindtap="bindViewTap">{{item.name}}
+        </text>
+      </view>
+    </block>
+    </view>
+  </view>
+  <view class="catagory flex">
+    <block wx:for="{{catagory}}" wx:key="{{item}}">
+     <text class="id">{{item.id}}</text>
+      <block wx:for="{{item.city}}" wx:key="{{item}}">
+        <view class="borderbottom">
+          <text class="title" data-text="{{item.name}}"bindtap="bindViewTap">{{item.name}}</text>
+        </view>
+      </block>
+    </block>
+  </view>
+ </view>
+</view>

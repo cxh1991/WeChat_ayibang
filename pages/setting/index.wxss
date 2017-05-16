@@ -1,0 +1,63 @@
+.containerbox{
+  width: 100%;
+}
+.wrap{
+  width: 95%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: 10px;
+  font-size: 16px;
+}
+.address{
+  width: 100%;
+  font-size: 16px;
+  border-bottom:1px dotted #00beaf;
+}
+.address image{
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+.address .dizhi{
+  margin-left: 4px;
+  font-size: 14px;
+}
+.address .addr{
+  margin-top: 20px;
+  color: #00beaf;
+}
+.area{
+  margin-top: 20px;
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.area input{
+  margin-left: 15px;
+  width: 200px;
+  height: 30px;
+  border: 1px solid #dadada;
+}
+.area .pingmi{
+  margin-left: 4px;
+}
+.servertime{
+  display: block;
+  margin-top: 20px;
+}
+.time{
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.time picker{
+  margin-bottom: 15px;
+}
+.finish{
+  background-color: #00beaf;
+  color: #fff;
+  font-size: 20px;
+}

@@ -1,0 +1,58 @@
+<view class="container">
+  <swiper
+  class="binner"
+   vertical="{{vertical}}"
+   autoplay="{{autoplay}}"
+   interval="{{interval}}"
+   duration="{{duration}}"
+   indicator-dots="{{indicatorDots}}">
+    <block wx:for="{{topimg}}" wx:key="item">
+      <swiper-item>
+        <image src="{{item.image}}" class="slide-image"></image>
+      </swiper-item>
+    </block>
+    <view class="city" bindtap="bindViewTap" >
+         <text class="current">{{city}}</text>
+    </view>
+  </swiper>
+  <view class="services">
+      <view class="wraper">
+      <block wx:for="{{serverlist}}" wx:key="{{item}}" >
+       <view class="list" bindtap="gotoserver">
+          <image src="{{item.imageUrl}}"/>
+          <text class="desc">{{item.description}}</text>
+       </view>
+      </block>
+     </view>
+  </view>
+  <view class="wrap">
+     <view class="cleanitem flex">
+       <view class="left" bindtap="gotoserver">
+         <view>
+           <text class="title">{{title}}</text>
+           <text class="desc">{{desc}}</text>
+           <image src="{{image}}"/>
+         </view>
+       </view>
+       <view class="right" bindtap="gotoserver">
+         <block wx:for="{{clean}}" wx:key="{{item}}">
+           <view class="flex box">
+             <view class="flex-auto">
+               <text class="title">{{item.title}}</text>
+               <text class="desc">{{item.desc}}</text>
+             </view>
+             <image src="{{item.img}}"/>
+           </view>
+         </block>
+       </view>
+     </view>
+  </view>
+  <view class="recombox">
+    <text class="hot">{{hot}}</text>
+    <block wx:for="{{recomlist}}" wx:key="{{item}}">
+      <view url="url" class="recom">
+        <image class="produ" src="{{item.img}}"/>
+      </view>
+    </block>
+  </view>
+</view>

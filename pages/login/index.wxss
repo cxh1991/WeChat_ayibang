@@ -1,0 +1,58 @@
+.container{
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+}
+.warn{
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #999;
+  padding-top:40px;
+  padding-bottom: 40px;
+}
+.oform{
+  width: 100%;
+}
+.inputbox{
+  padding-left: 6px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #dadada;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  background-color: #fff;
+}
+.flex{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.primary{
+  flex:1;
+}
+.inputbox button{
+  width: 100px; 
+  height: 30px;
+  line-height: 30px;
+  color:#fff;
+  background-color: #00beaf;
+
+}
+/*.send{
+  width: 50px;
+  height: 30px;
+  color: #00beaf;
+}*/
+.info{
+  font-size: 18px;
+  color: #00beaf;
+}
+.login{
+  margin-top: 20px;
+  background-color: #00beaf;
+  color: #fff;
+  font-size: 20px;
+}

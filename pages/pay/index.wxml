@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="wrap">
+    <view class="top">
+      <view class="server">服务类型：{{serverkind}}</view>
+      <view class="server">服务地址：{{serveraddr}}</view>
+      <view class="server">上门时间：{{date}} {{time}}上门</view>
+      <view class="server">费用明细：玻璃面积{{area}}平米,{{sum}}元</view>
+    </view>
+  <view class="payall ">
+    <text class="info">支付全款（包含预付款130元)</text>
+    <text class="money">{{sum}}元</text>
+  </view>
+  <view class="message">
+    <input type="text" placeholder="添加留言"/>
+  </view>
+  <view class="pay">
+    <text class="total">{{sum}}元</text>
+    <button id="payment" bindtap="pay">确认支付</button>
+
+  </view>
+  </view>
+</view>

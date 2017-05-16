@@ -1,0 +1,70 @@
+.container{
+  width: 100%;
+}
+.wrap{
+  width: 90%;
+  margin: 10px auto;
+}
+.top{
+  font-size: 14px;
+  color: #666;
+  border-bottom: 1rpx dotted #dadada;
+  margin-bottom: 15px;
+}
+.server{
+  margin-bottom: 15px;
+}
+.payall{
+  font-size: 18px;
+  background: url('../../images/人民币.png') no-repeat;
+  background-size: 30px 30px;
+  background-position: 0 30%;
+  padding-left: 28px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 10px;
+}
+.payall .money{
+  color: red;
+  float: right;
+}
+.message{
+  font-size: 16px;
+  background: url('../../images/message.png') no-repeat;
+  background-size: 26px 26px;
+  background-position: 0 14%;
+  padding-left: 28px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+}
+.pay{
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+.total{
+  padding-left: 16px;
+  box-sizing: border-box;
+  border-top:1px solid #dadada;
+  color: red;
+  flex:1;
+}
+.pay button{
+  width: 140px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #00beaf;
+  color: #fff;
+  border-radius: 0px;
+}

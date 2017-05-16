@@ -1,0 +1,26 @@
+<view class="containerbox">
+  <view class="wrap">
+  <form action="" class="oform" bindsubmit="formSubmit">
+    <view class="address" bindtap="getAddr">
+      <image src="../../images/地址.png"></image>
+      <text class="dizhi">设置地址</text>
+      <input class="addr" name="addr" value="{{address}}"/>
+    </view>
+    <view class="area ">
+      <label for="">玻璃面积</label>
+      <input type="num" name="area" class="input" placeholoder="请输入玻璃的面积"/>
+      <text class="pingpi">平米</text>
+    </view>
+      <view class="servetime">希望技师什么时候服务？</view>
+      <view class="time">
+        <picker mode="date" name="date" value="{{dateValue}}" start="{{dateValue}}" end="2999-12-12" bindchange="datePickerBindchange">
+	        服务日期选择: {{dateValue}}
+        </picker>
+        <picker mode="time" name="time" value="{{timeValue}}" start="00:00" end="24:00" bindchange="timePickerBindchange">
+          服务时间选择: {{timeValue}}
+        </picker>
+      </view>
+      <button class="finish" form-type="submit">下单</button>
+    </form>
+</view>
+</view>

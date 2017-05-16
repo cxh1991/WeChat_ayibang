@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="binner">
+    <image src="{{images}}"></image>
+  </view>
+  <block wx:for="{{items}}" wx:key="item">
+    <view class="vip-list">
+      <view class="flex-row" style="background: transparent url('{{item.image}}') no-repeat scroll 2% 28%;">
+        <view class="text">
+          <text class="title">{{item.title}}</text>
+          <text class="sub-title">{{item.subtitle}}</text>
+        </view>
+        <view class="chongzhi">{{item.chongzhi}}</view>
+      </view>
+    </view>
+  </block>
+</view>

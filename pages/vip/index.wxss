@@ -1,0 +1,54 @@
+.container{
+  background-color: #f8f8f8;
+}
+.binner{
+  width: 100%;
+  height: 160px;
+  margin-bottom: 10px;
+}
+.binner image{
+  width: 100%;
+  height: 160px;
+}
+.vip-list{
+  width: 100%;
+  height: 80px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+.flex-row{
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-size: 28px 28px !important
+}
+.text{
+  flex: 1;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+.text text{
+  display: block;
+}
+.text .title{
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.text .sub-title{
+  font-size: 14px;
+  color: #999;
+}
+.chongzhi{
+  border: 1px solid #00beaf;
+  background-color: #fff;
+  color: #00beaf;
+  padding: 6px 10px;
+  border-radius: 8px;
+}

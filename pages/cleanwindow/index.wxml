@@ -1,0 +1,44 @@
+<view class="containerbox">
+  <image class="background" src="https://s1.ayibang.com/static/h5/6.4/css/img/cblimg1_782ac7b.jpg"></image>
+  <view class="wrap">
+  <view class="button flex-hor">
+    <text class="price">130元起</text>
+    <button bindtap="choose">立即预约</button>
+  </view>
+  <view class="kind bgc flex-hor">
+    <text class="notvip">
+      非会员价
+    </text>
+    <text class="vip">
+      会员价
+    </text>
+  </view>
+  <view class="kind area flex-hor">
+    <text class="notvip">
+      14.3元/平米，143元起
+    </text>
+    <text class="vip">
+      13元/平米，130元起
+    </text>
+  </view>
+  <view class="chongzhi" bindtap="chongzhi">立即充值享会员优惠>></view>
+  <view class="warn">
+    <text class="info">温馨提示:</text>
+    <text class="info">1.10平米起，不足按10平米计，玻璃面积（含窗框）以实际测量为准；</text>
+    <text class="info">2.此为个人家庭用户价格，企业用户请通过企业服务通道预约，切勿在此界面预约。</text>
+  </view>
+  <view class="introduce">
+    <text class="info title">业务介绍</text>
+    <text class="info">阿姨帮平台服务商使用专业工具配合清洁剂，为您提供安全、高效的擦玻璃服务。该服务包含窗框、窗槽、纱窗的清尘和除垢，以及内外玻璃擦拭。建议每季度预约1次擦玻璃服务，晴天效果更佳。</text>
+    <image src="https://s1.ayibang.com/static/h5/6.4/css/img/cblnew1_e794d66.png"></image>
+  </view>
+  <view class="problems">
+    <text class="look">常见问题</text>
+    <text class="link">></text>
+  </view>
+  <view class="telephone">
+    <text class="hot">全国客服热线</text>
+    <text class="num">010-80697370</text>
+  </view>
+  </view>
+</view>
