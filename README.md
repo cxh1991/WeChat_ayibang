@@ -234,7 +234,7 @@ order:function(e){
  
 看图说话<br>
 
- ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/chooseaddr.jpg) <br>
+ ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/chooseaddr.JPG) <br>
  
  这里用到了微信小程序提供的wx.chooseLocation({})接口，它可以调用到腾讯地图打开你所在位置的地图，用户可以手动选择位置，核心代码如下：<br>
  ```javascript
@@ -324,9 +324,50 @@ formSubmit:function(e){
 * 查看订单
 
 眼见为实<br>
-![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/noorder.jpg) <br>
-![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/order.jpg) <br>
-由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/noorder.JPG) <br>
+
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/order.JPG) <br>
+由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。区分思想：核心代码：<br>
+```javascript
+wx.getStorage({
+      key:'id',
+      success:function(res){
+        that.setData({
+          id:res.data
+        });
+        console.log(that.data.id);
+        if(that.data.id === res.data){
+          that.setData({
+            display1:'block',
+            display2:'none'
+          });
+        }else{
+          that.setData({
+            display1:'none',
+            display2:'block'
+          });
+        }
+      },
+      fail:function(){
+        that.setData({
+          id:0
+        });
+        console.log(that.data.id);
+        if(that.data.id === 0){
+          that.setData({
+            display1:'none',
+            display2:'block'
+          });
+        }else{
+          that.setData({
+            display1:'block',
+            display2:'none'
+          });
+        }
+      }
+    })
+```
+
 
 
  到这里差不多也都介绍完了，最后我想分享我在过程中踩过的一些坑：<br>
