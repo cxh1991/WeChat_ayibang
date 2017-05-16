@@ -28,7 +28,7 @@ _______
 
 功能实现
 ____
-* 轮播图 & 底栏交互
+* 轮播图 & 底栏交互 & 页面跳转
 
 先来看看主界面：<br>
 
@@ -117,8 +117,9 @@ Page({
  ```javascript
   bindViewTap:function(e){
     wx.navigateTo({
-        url: '../city/index'
-    })
+      //跳转到城市列表的页面
+        url: '../city/index' 
+    })
  ```
  <br>
  
@@ -135,16 +136,18 @@ Page({
   loadCity:function(longitude,latitude){
     var page =this;
     wx.request({
-      url: 'http://api.map.baidu.com/geocoder/v2/?ak=btsVVWf0TM1zUBEbzFz6QqWF&callback=renderReverse&location='+latitude+','+longitude+'&output=json&pois=1',
-      data: {},
+     //baidu地图API
+      url: 'http://api.map.baidu.com/geocoder/v2/?ak=btsVVWf0TM1zUBEbzFz6QqWF&callback=renderReverse&location='+latitude+','+longitude+'&output=json&pois=1',
+      data: {},
       header:{
         'Content-Type':'application/json'
       },
       success: function(res){
         // success
         console.log(res);
-        var str1=res.data;
-        var str2=str1.replace("renderReverse&&renderReverse(","");
+        var str1=res.data;
+        //坑 此时返回的并不是JSON对象，要进行相关转换！
+        var str2=str1.replace("renderReverse&&renderReverse(","");
         var str3=str2.substring(0,str2.length-1);
         var cityresult=JSON.parse(str3);
         console.log(typeof(cityresult));
@@ -201,7 +204,130 @@ Page({
   
 * 预约服务
 
+在此先申明，这里并没有实现所有的服务功能，我只实现了擦玻璃这项服务的预约、下单，其他的服务实现的代码都类似，我就没有所有的都展开写，如果有时间，会一一完善，所以就先凑合着看看吧！<br>
 浏览一下效果图<br>
+
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/yuyue.gif) <br>
+
+实现此过程挺基础的，就是页面之间的切换，相关代码如下：<br>
+```javascript
+gotoserver:function(e){
+    wx.navigateTo({
+      url: '../server/index' //跳转到服务项目页面
+    })
+  }
+order:function(e){
+    console.log(e.target.dataset.text);
+    wx.setStorage({
+      key:'kind',
+      data:e.target.dataset.text
+    })
+    if(e.target.dataset.text === "擦玻璃"){ //判断用户是否选择了擦玻璃，是就跳转到下单页面
+      wx.navigateTo({
+        url: '../cleanwindow/index'
+      })
+    }
+  }
+ ```
+ 
+* 地图选址
+ 
+看图说话<br>
+
+ ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/chooseaddr.jpg) <br>
+ 
+ 这里用到了微信小程序提供的wx.chooseLocation({})接口，它可以调用到腾讯地图打开你所在位置的地图，用户可以手动选择位置，核心代码如下：<br>
+ ```javascript
+ getAddr: function(){
+    var that = this;
+    wx.chooseLocation({
+    success: function(res){
+    var point = {
+    latitude: res.latitude,
+    longitude: res.longitude
+    };
+    // console.log(res.name)
+    //设置位置的名字
+    that.setData({
+    address : res.name || res.address
+    });
+  }
+})
+},
+ ```
+ 
+* 下单
+
+看图再说话<br>
+
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/xiadan.gif) <br>
+
+看图可以知道，下单之前，要选好服务地址，上面已经介绍了，使用的是微信自带的api接口(wx.chooseLocation()),然后是一个输入框输入清洗玻璃的面积，根据这个输入，可以计算出用户需要支付的总费用，接下来就是选择服务时间，这里用到的picker组件，picker是从底部弹起的滚动选择器，现支持三种选择器，分别是普通选择器，时间选择器，日期选择器，默认是普通选择器，可以通过mode来区分，这里设置成mode=date,mode=time.下单的实现用到了表单的提交事件，通过form-type为submit的按钮来提交表单触发formsubmit事件,请注意，一定要给表单组件加上name属性，由此来进行赋值。来看看具体实现的代码吧：<br>
+HTML结构 具体参考源码<br>
+```html
+<form action="" class="oform" bindsubmit="formSubmit">
+    <view class="address" bindtap="getAddr">
+      <input class="addr" name="addr" value="{{address}}"/>
+    </view>
+    <view class="area ">
+      <input type="num" name="area" class="input" placeholoder="请输入玻璃的面积"/>
+    </view>
+    <view class="time">
+        <picker mode="date" name="date" value="{{dateValue}}" start="{{dateValue}}" end="2999-12-12" bindchange="datePickerBindchange">
+	        服务日期选择: {{dateValue}}
+        </picker>
+        <picker mode="time" name="time" value="{{timeValue}}" start="00:00" end="24:00" bindchange="timePickerBindchange">
+          服务时间选择: {{timeValue}}
+        </picker>
+     </view>
+      <button class="finish" form-type="submit">下单</button>
+ </form>
+```
+JS逻辑结构<br>
+```javascript
+//在util.js里文件里定义了两个方法，分别是获取当前的日期和当前的时间，这里要导入使用到
+var util = require('../../utils/util.js')
+//表单的formSubmit事件可以获取到input、picker等组件的值，以便存储到Storage里面
+formSubmit:function(e){
+    var that=this;
+    var addr=e.detail.value.addr,
+      area=e.detail.value.area,
+      date=e.detail.value.date,
+      time=e.detail.value.time;
+    console.log(e.detail.value);
+    wx.setStorage({
+      key:"order",
+      data:{
+        addr,
+        area,
+        date,
+        time
+      }
+    });
+    wx.navigateTo({
+      url:'../pay/index'
+    })
+  },
+  //获取用户选择的时间和日期
+  timePickerBindchange:function(e){
+   this.setData({
+     timeValue:e.detail.value
+   })
+ },
+ datePickerBindchange:function(e){
+   this.setData({
+     dateValue:e.detail.value
+   })
+ }
+```
+
+* 查看订单
+
+眼见为实<br>
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/noorder.jpg) <br>
+![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/order.jpg) <br>
+由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。
+
 
  到这里差不多也都介绍完了，最后我想分享我在过程中踩过的一些坑：<br>
  * 微信小程序开发中图片的样式是有默认值，宽320 高240 display:inline-block···所以有图片及得要自己给它添上样式，覆盖默认，以防影响！<br>
