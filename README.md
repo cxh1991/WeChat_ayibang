@@ -324,9 +324,11 @@ formSubmit:function(e){
 * 查看订单
 
 眼见为实<br>
+
 ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/noorder.JPG) <br>
 
 ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/order.JPG) <br>
+
 由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。状态切换的思想：其实在html结构里分别用div包含了两种不同状态的页面，只是用display来控制状态的显示，而这个状态取决于在本地存储里能不能找到id。id是什么呢? id就是你下单时产生的一个id号，如果用getStorage能够捕获到这个id,则说明用户已经下单，那么这时候没有订单的div我们把它的display属性设置为none不可见，而将显示订单详情的div设为block可见。核心代码：<br>
 ```javascript
 wx.getStorage({
@@ -374,5 +376,5 @@ wx.getStorage({
  * 最后要讲的是一个细节问题，如果想要及时刷新页面的话，我们最好把数据接口放到onshow()方法里面，这样数据发生改变就能刷新页面的显示。<br>
  * 区分wx.navigateTo和wx.switchTab，前者是保留当前页面，跳转到应用内的某个页面（不在tabbar），后者是跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。当我们要从不在tabbar里的页面中跳转到tabbar页面时，除了选择左上角的返回键后，应该选择wx.switchTab,而不是wx.navigateTo。<br>
   <br>
- (更多的服务功能及充值功能将继续完善，see you later!)
+ (更多的服务功能及充值功能将继续完善，see you later!)<br>
   喜欢就送我小星星哟~~
