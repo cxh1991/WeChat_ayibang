@@ -24,7 +24,7 @@ _______
 * `图片轮播`
 * `...`
 
-首先先要解释我的数据来源，我使用的是用mock来模拟数据，http://www.easy-mock.com Easy Mock 是一个可视化工具，并且能快速生成模拟数据的服务，它能为我们提供一个数据接口url，这要我们就能够使用request发送数据请求了。<br>
+首先先要解释我的数据来源，我使用的是用mock来模拟数据，详情看http://www.easy-mock.com Easy Mock是一个可视化工具，能快速生成模拟数据的服务，它能为我们提供一个数据接口url，这要我们就能够使用request发送数据请求了。其次要解释的是用户登录问题，我选择的使用微信账号登录，使用小程序自带的wx.getUseInfo()应用接口来获取用户的信息，当然它首先会调用wx.login接口，询问用户是否给予权限。先就交代这两点，让我们正式进入主题：<br>
 
 功能实现
 ____
@@ -34,7 +34,7 @@ ____
 
  ![Image text](https://github.com/Sukura7/wechat-ayibang/blob/master/images/ayibang.JPG) <br>
               
-这个界面用到了微信小程序自带的轮播图组件以及tabbar组件，能够快速的实现了我们想要的效果，而这些用原生js或者jquery来coding是有一定麻烦的. 让我们来看看微信小程序是如何实现的吧：<br>
+这个界面用到了微信小程序自带的轮播图(swiper)组件以及底栏(tabbar)组件，能够快速的实现我们想要的图片轮播和底栏切换的效果，而这些用原生js或者jquery来coding都是很麻烦的. 让我们来看看微信小程序是如何实现的吧：<br>
 
 HTML结构<br>
 ```html
@@ -68,13 +68,13 @@ Page({
     }
   })
 ```
-以上就是实现图片轮播效果的代码，使用swiper组件,在再js里做一些相关配置即可轻松实现。<br>
+以上就是实现图片轮播效果的代码，使用滑块视图容器swiper组件,它拥有vertical(是否垂直放置图片）、autoplay(是否自动切换）、interval(自动切换时间间隔)、duration(滑动动画时长)、durationindicator-dot(是否显示面板指示点)等属性，再在js里对这些属性做相关的设置。此外，在组件上还用到了列表渲染wx:for，将图片的src属性绑定在一个数组上，使用数组中各项的数据重复渲染swiper组件<br>
 
 看看底栏切换交互的效果吧！<br>
 
 ![Image text](https://github.com/Sukura7/wechat-ayibang/blob/master/images/tabbar.gif) <br>
 
-先暂且不管我制作的gif图有多渣，主要想体现的就是个各底部栏之间能进行切换，这个功能实现较简单，主要设置页面的路径，请参考一下代码<br>
+先暂且不管我制作的gif图有多渣，主要想体现的就是个各底部栏之间能进行切换，这个功能实现较简单，主要在tabBar里设置样式、页面路径、图片路径，用列表list来渲染,详细请参考以下代码<br>
 ```javascript
 "tabBar":{
     "color":"#888",
@@ -109,11 +109,11 @@ Page({
   }
   ```
   
- 接下来是非底栏的页面之间的交互，它的实现主要依赖wx.navigateTo()API<br>
+ 接下来是非底栏的页面之间的交互，它的实现主要依赖wx.navigateTo导航接口<br>
  
   ![Image text](https://github.com/Sukura7/wechat-ayibang/blob/master/images/pagechange.gif) <br>
   
-微信小程序是没有a标签的，但是有wx.navigateTo API实现页面的跳转，有关页面的跳转的三种方式可以详看文档，后面还会用到wx.switchTab进行非底栏页面与底栏页面的切换。这个功能实现的key point在于我们要在某个组件上绑定事件，写法为 bindtap="bindViewTap"，然后在js里添上逻辑控制，代码参考：<br>
+微信小程序是没有a标签的，但是有wx.navigateTo API实现页面的跳转，有关页面的跳转的三种方式可以详看文档，后面还会用到wx.switchTab进行非底栏页面与底栏页面的切换。这个功能实现的重点在于我们要在某个组件上绑定事件，写法为 bindtap="bindViewTap"，然后在js里添上逻辑控制，代码参考：<br>
  ```javascript
   bindViewTap:function(e){
     wx.navigateTo({
@@ -130,13 +130,13 @@ Page({
  
   ![Image text](https://github.com/Sukura7/wechat-ayibang/blob/master/images/citychange.gif) <br>
   
-当我们一开始进入应用时，页面会显示我们此时此刻所在的城市，然而在微信提供的wx.getLocation API中，它只会返回经纬度，不会讲具体的国家呀城市呀街道等信息反馈给你，所以我们需要借用百度地图、腾讯地图的API来逆地址解析出这些信息。我用的是百度地图的API,这里会有遇到一些坑，在后面会有介绍，具体代码如下：<br>
+当我们一开始进入应用时，页面会显示我们此时此刻所在的城市，然而在微信提供的wx.getLocation API中，它只会返回经纬度，不会将具体的国家呀城市呀街道等信息反馈给你，所以我们需要借用百度地图、腾讯地图的API来逆地址解析出这些信息。我用的是百度地图的API,这里会有遇到一些坑，在后面会有介绍，具体代码如下：<br>
 
   ```javascript
   loadCity:function(longitude,latitude){
     var page =this;
     wx.request({
-     //baidu地图API
+     //baidu地图逆地址解析API
       url: 'http://api.map.baidu.com/geocoder/v2/?ak=btsVVWf0TM1zUBEbzFz6QqWF&callback=renderReverse&location='+latitude+','+longitude+'&output=json&pois=1',
       data: {},
       header:{
@@ -166,8 +166,8 @@ Page({
     })
   } 
  ```
-你在gif图中也能看到，当你跳转到另一个页面，当你选中某一个城市时，主页的地址也要发生改变，这又是怎么做到的呢？<br>
-这就跟本地存储有关了，我们学JS时知道locall storage能够长期的保持数据，我们不妨使用它来实现这种数据之间的传输。我在这调用了wx.setStorage和   wx.getStorage两个API，当我选中某个城市时，就把这个数据保存到数据库中（setstorage）,然后主页使用（getstorage）提取出数据为自己所用。这样想明白就会觉得也不难。看看主要代码实现吧：<br>
+你在gif图中也能看到，你跳转到另一个页面后，当你选中某一个城市时，主页的地址也要发生改变，这又是怎么做到的呢？<br>
+这就跟本地存储有关了，我们学JS时知道localStorage能够长期的保持数据，我们不妨使用它来实现这种数据之间的传输。微信小程序与之等效的是Storage本地存储,我在这调用了wx.setStorage和wx.getStorage两个API，当我选中某个城市时，就把这个数据保存（setstorage）到数据库中,然后主页使用提取（getstorage）出数据为自己所用。这样想明白就会觉得也不难。看看主要代码实现吧：<br>
 在city这个的index.js种下这颗“种子”<br>
  
  ```javascript
@@ -258,7 +258,7 @@ order:function(e){
  
 * 下单
 
-看图再说话<br>
+看看效果图<br>
 
 ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/xiadan.gif) <br>
 
@@ -327,7 +327,7 @@ formSubmit:function(e){
 ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/noorder.JPG) <br>
 
 ![Image text](https://github.com/Sukura7/WeChat_ayibang/blob/master/images/order.JPG) <br>
-由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。区分思想：核心代码：<br>
+由图可知道，订单的显示有两种状态，一是没有订单时的显示，二是支付后的显示情况。状态切换的思想：其实在html结构里分别用div包含了两种不同状态的页面，只是用display来控制状态的显示，而这个状态取决于在本地存储里能不能找到id。id是什么呢? id就是你下单时产生的一个id号，如果用getStorage能够捕获到这个id,则说明用户已经下单，那么这时候没有订单的div我们把它的display属性设置为none不可见，而将显示订单详情的div设为block可见。核心代码：<br>
 ```javascript
 wx.getStorage({
       key:'id',
@@ -368,12 +368,11 @@ wx.getStorage({
     })
 ```
 
-
-
  到这里差不多也都介绍完了，最后我想分享我在过程中踩过的一些坑：<br>
  * 微信小程序开发中图片的样式是有默认值，宽320 高240 display:inline-block···所以有图片及得要自己给它添上样式，覆盖默认，以防影响！<br>
  * 在调用百度地图的API中，它会返回含有特殊符号的json字符串，我在这个坑里转了几个小时，度娘说是啥发送请求时自带什么bom头，删除就行，然而，我并没有搞   明白，我最后用的方法是把这个不太规矩的字符串通过一些字符串方法以及json,parse()方法把它转化成了json对象。<br>
  * 最后要讲的是一个细节问题，如果想要及时刷新页面的话，我们最好把数据接口放到onshow()方法里面，这样数据发生改变就能刷新页面的显示。<br>
  * 区分wx.navigateTo和wx.switchTab，前者是保留当前页面，跳转到应用内的某个页面（不在tabbar），后者是跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。当我们要从不在tabbar里的页面中跳转到tabbar页面时，除了选择左上角的返回键后，应该选择wx.switchTab,而不是wx.navigateTo。<br>
   <br>
-  （待续···）
+ (更多的服务功能及充值功能将继续完善，see you later!)
+  喜欢就送我小星星哟~~
